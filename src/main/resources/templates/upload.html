@@ -2,15 +2,9 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/dashboard-layout.html}">
-<head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" th:href="@{/main.css}">
-</head>
+
 <body>
-<div th:replace="~{components/dashboard-navber :: navbar}"></div>
-<div class="p-4">
+<div layout:fragment="content" class="p-4">
     <div class="md:flex">
         <ul class="flex-column space-y space-y-4 text-sm font-medium text-gray-500 dark:text-gray-400 md:me-4 mb-4 md:mb-0">
             <li role="presentation">
@@ -79,43 +73,47 @@
             </div>
         </div>
     </div>
-</div>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const tabButtons = document.querySelectorAll('[role="tab"]');
-        const tabPanels = document.querySelectorAll('[role="tabpanel"]');
 
-        // Show the first tab by default
-        if (tabPanels.length > 0) {
-            tabPanels[0].classList.remove('hidden');
-        }
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const tabButtons = document.querySelectorAll('[role="tab"]');
+            const tabPanels = document.querySelectorAll('[role="tabpanel"]');
 
-        tabButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                // Hide all panels
-                tabPanels.forEach(panel => {
-                    panel.classList.add('hidden');
+            // Show the first tab by default
+            if (tabButtons.length > 0 && tabPanels.length > 0) {
+                tabButtons[0].setAttribute('aria-selected', 'true');
+                tabPanels[0].classList.remove('hidden');
+            }
+
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // Hide all panels
+                    tabPanels.forEach(panel => {
+                        panel.classList.add('hidden');
+                    });
+
+                    // Remove active state from all buttons
+                    tabButtons.forEach(btn => {
+                        btn.setAttribute('aria-selected', 'false');
+                        btn.classList.remove('text-white', 'bg-blue-700');
+                        btn.classList.add('hover:text-gray-900', 'bg-gray-50', 'hover:bg-gray-100');
+                    });
+
+                    // Show the selected panel
+                    const targetId = button.getAttribute('data-tabs-target').substring(1); // Remove the '#' from the ID
+                    const targetPanel = document.getElementById(targetId);
+                    if (targetPanel) {
+                        targetPanel.classList.remove('hidden');
+                    }
+
+                    // Add active state to clicked button
+                    button.setAttribute('aria-selected', 'true');
+                    button.classList.remove('hover:text-gray-900', 'bg-gray-50', 'hover:bg-gray-100');
+                    button.classList.add('text-white', 'bg-blue-700');
                 });
-
-                // Remove active state from all buttons
-                tabButtons.forEach(btn => {
-                    btn.classList.remove('text-white', 'bg-blue-700');
-                    btn.classList.add('hover:text-gray-900', 'bg-gray-50', 'hover:bg-gray-100');
-                });
-
-                // Show the selected panel
-                const targetId = button.getAttribute('data-tabs-target').substring(1);
-                const targetPanel = document.getElementById(targetId);
-                if (targetPanel) {
-                    targetPanel.classList.remove('hidden');
-                }
-
-                // Add active state to clicked button
-                button.classList.remove('hover:text-gray-900', 'bg-gray-50', 'hover:bg-gray-100');
-                button.classList.add('text-white', 'bg-blue-700');
             });
         });
-    });
-</script>
+    </script>
+</div>
 </body>
 </html>
