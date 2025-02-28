@@ -8,27 +8,31 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Optional;
 
 @Service
 public class StorageServiceImpl implements StorageService {
     private final StorageRepository storageRepository;
-    private final String FOLDER_PATH = "/home/";
+    private final String FOLDER_PATH = "/Users/siam/Documents";
 
     public StorageServiceImpl(StorageRepository storageRepository) {
         this.storageRepository = storageRepository;
     }
 
-    public String uploadImageToFileSystem(MultipartFile file) throws IOException {
-        String filePath = FOLDER_PATH + file.getOriginalFilename();
-        file.transferTo(new File(filePath));
+    public AppFile uploadImageToFileSystem(MultipartFile file) throws IOException {
+        Path fileNameAndPath = Paths.get(FOLDER_PATH, file.getOriginalFilename());
         AppFile appFile = storageRepository.save(AppFile.builder()
                 .fileName(file.getOriginalFilename())
                 .fileSize(file.getSize())
                 .fileType(file.getContentType())
-                .fileUrl(filePath).build());
+                .fileUrl(fileNameAndPath.toString()).build());
+        StringBuilder fileNames = new StringBuilder();
+        fileNames.append(file.getOriginalFilename());
+        Files.write(fileNameAndPath, file.getBytes());
 
-        return "Successfully uploaded file" + appFile.getFileName();
+        return appFile;
     }
 
     public byte[] downloadImageFromFileSystem(String fileName) throws IOException {

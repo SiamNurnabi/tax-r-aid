@@ -1,6 +1,7 @@
 package com.example.taxraid.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 @Entity
@@ -16,15 +17,19 @@ public class AppFile {
     @Column(name = "id")
     private Long id;
 
+    @NotNull
     @Column(name = "file_name", nullable = false)
     private String fileName;
 
+    @NotNull
     @Column(name = "file_url", nullable = false)
     private String fileUrl;
 
+    @NotNull
     @Column(name = "file_size", nullable = false)
     private Long fileSize;
 
+    @NotNull
     @Column(name = "file_type", nullable = false)
     private String fileType;
 }

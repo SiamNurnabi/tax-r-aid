@@ -1,5 +1,6 @@
 package com.example.taxraid.controller;
 
+import com.example.taxraid.entity.AppFile;
 import com.example.taxraid.entity.BankInformation;
 import com.example.taxraid.service.BankInformationService;
 import com.example.taxraid.service.StorageService;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -25,7 +27,7 @@ public class UploadController {
     private final BankInformationService bankInformationService;
     private final StorageService storageService;
 
-    public UploadController(BankInformationService bankInformationService,StorageService storageService) {
+    public UploadController(BankInformationService bankInformationService, StorageService storageService) {
         this.bankInformationService = bankInformationService;
         this.storageService = storageService;
     }
@@ -38,17 +40,19 @@ public class UploadController {
     }
 
     @PostMapping("/add-bank-info")
-    public String submitBankInfo(@ModelAttribute("bankInformation") BankInformation bankInformation) {
-
+    public String submitBankInfo(@ModelAttribute("bankInformation") BankInformation bankInformation,
+                                 @RequestParam("image") MultipartFile file) throws IOException {
+        AppFile appFile = storageService.uploadImageToFileSystem(file);
+        bankInformation.setFileId(appFile);
         bankInformationService.save(bankInformation);
         return "redirect:/upload";
     }
 
     @PostMapping("fileSystem")
     public ResponseEntity<?> uploadImageToFileSystem(@RequestParam("image") MultipartFile file) throws IOException {
-        String uploadImage = storageService.uploadImageToFileSystem(file);
+        AppFile appFile = storageService.uploadImageToFileSystem(file);
         return ResponseEntity.status(HttpStatus.OK)
-                .body(uploadImage);
+                .body(appFile.getFileUrl());
     }
 
     @PostMapping("fileName")
