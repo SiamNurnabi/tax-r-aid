@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/dashboard-layout.html}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div layout:fragment="content" class="p-4">
+    <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+        <table id="filter-table" class="table-auto w-full">
+            <thead class="bg-gray-800 text-white uppercase">
+            <tr>
+                <th class="px-6 py-3 text-center">Bank Name</th>
+                <th class="px-6 py-3 text-center">Account Number</th>
+                <th class="px-6 py-3 text-center">Account Type</th>
+                <th class="px-6 py-3 text-center">Opening Balance</th>
+                <th class="px-6 py-3 text-center">Interest</th>
+                <th class="px-6 py-3 text-center">Tds</th>
+                <th class="px-6 py-3 text-center">File</th>
+                <th class="px-6 py-3 text-center">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="bg-white border-b" th:each="bankInformation : ${bankInformationList}">
+                <td class="px-6 py-6 text-center" th:text="${bankInformation.bankName}"></td>
+                <td class="px-6 py-6 text-center" th:text="${bankInformation.accNo}"></td>
+                <td class="px-6 py-6 text-center" th:text="${bankInformation.accType}"></td>
+                <td class="px-6 py-6 text-center" th:text="${bankInformation.openingBalance}"></td>
+                <td class="px-6 py-6 text-center" th:text="${bankInformation.interest}"></td>
+                <td class="px-6 py-6 text-center" th:text="${bankInformation.tds}"></td>
+                <td class="px-6 py-6 text-center" th:text="${bankInformation.fileId.fileName}"></td>
+                <td class="px-6 py-6 text-center"><a th:href="${bankInformation.fileId.getFileUrl()}"
+                                                     class="text-blue-600 hover:underline" target="_blank">Open</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+
+        var table = $('#filter-table').DataTable({
+            select: false,
+            "columnDefs": [{
+                className: "Name",
+                "targets": [0],
+                "visible": false,
+                "searchable": false
+            }]
+        });//End of create main table
+
+
+        $('#example tbody').on('click', 'tr', function () {
+
+            alert(table.row(this).data()[0]);
+
+        });
+    });
+</script>
+
+</body>
+</html>
