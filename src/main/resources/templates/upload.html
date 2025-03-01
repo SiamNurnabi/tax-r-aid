@@ -20,13 +20,13 @@
             </li>
             <li role="presentation">
                 <button class="inline-flex items-center px-4 py-3 rounded-lg hover:text-gray-900 bg-gray-50 hover:bg-gray-100 w-full dark:bg-gray-800 dark:hover:bg-gray-700 dark:hover:text-white"
-                        id="dashboard-tab" data-tabs-target="#dashboard" type="button" role="tab"
-                        aria-controls="dashboard" aria-selected="false">
+                        id="income-statement-tab" data-tabs-target="#incomeStatement" type="button" role="tab"
+                        aria-controls="incomeStatement" aria-selected="false">
                     <svg class="w-4 h-4 me-2 text-gray-500 dark:text-gray-400" aria-hidden="true"
                          xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 18">
                         <path d="M6.143 0H1.857A1.857 1.857 0 0 0 0 1.857v4.286C0 7.169.831 8 1.857 8h4.286A1.857 1.857 0 0 0 8 6.143V1.857A1.857 1.857 0 0 0 6.143 0Zm10 0h-4.286A1.857 1.857 0 0 0 10 1.857v4.286C10 7.169 10.831 8 11.857 8h4.286A1.857 1.857 0 0 0 18 6.143V1.857A1.857 1.857 0 0 0 16.143 0Zm-10 10H1.857A1.857 1.857 0 0 0 0 11.857v4.286C0 17.169.831 18 1.857 18h4.286A1.857 1.857 0 0 0 8 16.143v-4.286A1.857 1.857 0 0 0 6.143 10Zm10 0h-4.286A1.857 1.857 0 0 0 10 11.857v4.286c0 1.026.831 1.857 1.857 1.857h4.286A1.857 1.857 0 0 0 18 16.143v-4.286A1.857 1.857 0 0 0 16.143 10Z"/>
                     </svg>
-                    Dashboard
+                    Income Statement
                 </button>
             </li>
             <li>
@@ -65,7 +65,8 @@
         <div id="default-tab-content">
             <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="profile" role="tabpanel"
                  aria-labelledby="profile-tab">
-                <form th:action="@{/upload/add-bank-info}" th:method="post" enctype="multipart/form-data" th:object="${bankInformation}">
+                <form th:action="@{/upload/add-bank-info}" th:method="post" enctype="multipart/form-data"
+                      th:object="${bankInformation}">
                     <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col">
                         <div class="-mx-3 md:flex mb-6">
                             <div class="md:w-full px-3">
@@ -125,13 +126,14 @@
                                 <input class="w-full bg-gray-200 text-black border border-gray-200 rounded py-3 px-4 mb-3"
                                        id="balance" type="number" placeholder="100000" th:field="*{balance}">
                             </div>
-                            <div class="md:w-1/2 px-3">
-                                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                            <div>
+                                <label class="block text-sm/6 font-semibold text-gray-900"
                                        for="file_input">Upload file</label>
-                                <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                                       aria-describedby="file_input_help" id="file_input" name="image" accept="image/*" type="file">
-                                <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">SVG, PNG,
-                                    JPG or GIF (MAX. 800x400px).</p>
+                                <input class="w-full bg-gray-200 text-black border border-gray-200 rounded py-3 px-4 mb-3"
+                                       aria-describedby="file_input_help" id="file_input" name="image"
+                                       accept="application/pdf,image/*" type="file">
+                                <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">MAX.
+                                    1M</p>
                             </div>
                         </div>
                         <div class="-mx-3 md:flex mt-2">
@@ -145,7 +147,7 @@
                     </div>
                 </form>
             </div>
-            <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="dashboard" role="tabpanel"
+            <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="incomeStatement" role="tabpanel"
                  aria-labelledby="dashboard-tab">
                 <p class="text-sm text-gray-500 dark:text-gray-400">This is some placeholder content the <strong
                         class="font-medium text-gray-800 dark:text-white">Dashboard tab's associated content</strong>.

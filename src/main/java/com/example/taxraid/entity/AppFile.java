@@ -1,5 +1,6 @@
 package com.example.taxraid.entity;
 
+import com.example.taxraid.enums.AppFileType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -29,7 +30,8 @@ public class AppFile {
     @Column(name = "file_size", nullable = false)
     private Long fileSize;
 
+    @Enumerated(EnumType.STRING)
     @NotNull
     @Column(name = "file_type", nullable = false)
-    private String fileType;
+    private AppFileType fileType;
 }
