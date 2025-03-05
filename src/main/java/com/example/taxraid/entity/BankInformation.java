@@ -1,7 +1,6 @@
 package com.example.taxraid.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
@@ -38,4 +37,8 @@ public class BankInformation extends BaseEntity {
     @NotNull
     @Column(name = "balance")
     private Double balance;
+
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "file_id")
+    private AppFile fileId;
 }
