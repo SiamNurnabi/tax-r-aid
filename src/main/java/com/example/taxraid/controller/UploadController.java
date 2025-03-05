@@ -42,6 +42,9 @@ public class UploadController {
 
         model.addAttribute("bankInformation", new BankInformation());
         model.addAttribute("incomeInformation", new IncomeInformation());
+
+        model.addAttribute("bankInfoList", bankInformationService.getAllBankInformation());
+        model.addAttribute("incomeInfoList", incomeInformationService.getAllBankInformation());
         return "upload";
     }
 

@@ -6,10 +6,11 @@
 <body>
 <div layout:fragment="content" class="p-4">
     <div class="md:flex">
-        <ul class="flex-column space-y space-y-4 text-sm font-medium text-gray-500 dark:text-gray-400 md:me-4 mb-4 md:mb-0">
+        <ul class="flex-column space-y space-y-4 text-sm font-medium text-gray-500 dark:text-gray-400 bg-white shadow-md rounded h-fit md:me-4 mb-4 md:mb-0 p-4 w-1/5">
             <li role="presentation">
                 <button class="inline-flex items-center px-4 py-3 text-white bg-blue-700 rounded-lg active w-full dark:bg-blue-600"
-                        id="profile-tab" data-tabs-target="#profile" type="button" role="tab" aria-controls="profile"
+                        id="bank-info-tab" data-tabs-target="#bank-info" type="button" role="tab"
+                        aria-controls="bank-info"
                         aria-selected="false">
                     <svg class="w-4 h-4 me-2 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                          fill="currentColor" viewBox="0 0 20 20">
@@ -62,90 +63,22 @@
                 </button>
             </li>
         </ul>
-        <div id="default-tab-content">
-            <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="profile" role="tabpanel"
-                 aria-labelledby="profile-tab">
-                <form th:action="@{/upload/add-bank-info}" th:method="post" enctype="multipart/form-data"
-                      th:object="${bankInformation}">
-                    <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col">
-                        <div class="-mx-3 md:flex mb-6">
-                            <div class="md:w-full px-3">
-                                <label class="uppercase tracking-wide text-black text-xs font-bold mb-2" for="bankName">
-                                    Bank Name
-                                </label>
-                                <input class="w-full bg-gray-200 text-black border border-gray-200 rounded py-3 px-4 mb-3"
-                                       id="bankName" type="text" placeholder="Write" th:field="*{bankName}" required>
-                            </div>
-                        </div>
-                        <div class="-mx-3 md:flex mb-6">
-                            <div class="md:w-1/2 px-3">
-                                <label class="uppercase tracking-wide text-black text-xs font-bold mb-2" for="accNo">
-                                    Account Number
-                                </label>
-                                <input class="w-full bg-gray-200 text-black border border-gray-200 rounded py-3 px-4 mb-3"
-                                       id="accNo" type="number" placeholder="123456789" th:field="*{accNo}" required>
-                            </div>
-                            <div class="md:w-1/2 px-3">
-                                <label class="uppercase tracking-wide text-black text-xs font-bold mb-2" for="accType">
-                                    Account Type
-                                </label>
-                                <input class="w-full bg-gray-200 text-black border border-gray-200 rounded py-3 px-4 mb-3"
-                                       id="accType" type="text" placeholder="Write" th:field="*{accType}">
-                            </div>
-                        </div>
-                        <div class="-mx-3 md:flex mb-6">
-                            <div class="md:w-1/2 px-3">
-                                <label class="uppercase tracking-wide text-black text-xs font-bold mb-2"
-                                       for="openingBalance">
-                                    Opening Balance
-                                </label>
-                                <input class="w-full bg-gray-200 text-black border border-gray-200 rounded py-3 px-4 mb-3"
-                                       id="openingBalance" type="number" placeholder="99999"
-                                       th:field="*{openingBalance}" required>
-                            </div>
-                            <div class="md:w-1/2 px-3">
-                                <label class="uppercase tracking-wide text-black text-xs font-bold mb-2" for="interest">
-                                    Interest
-                                </label>
-                                <input class="w-full bg-gray-200 text-black border border-gray-200 rounded py-3 px-4 mb-3"
-                                       id="interest" type="number" placeholder="7.5%" th:field="*{interest}">
-                            </div>
-                        </div>
-                        <div class="-mx-3 md:flex mb-6">
-                            <div class="md:w-1/2 px-3">
-                                <label class="uppercase tracking-wide text-black text-xs font-bold mb-2" for="tds">
-                                    TDS
-                                </label>
-                                <input class="w-full bg-gray-200 text-black border border-gray-200 rounded py-3 px-4 mb-3"
-                                       id="tds" type="number" placeholder="1000" th:field="*{tds}" required>
-                            </div>
-                            <div class="md:w-1/2 px-3">
-                                <label class="uppercase tracking-wide text-black text-xs font-bold mb-2" for="balance">
-                                    Balance
-                                </label>
-                                <input class="w-full bg-gray-200 text-black border border-gray-200 rounded py-3 px-4 mb-3"
-                                       id="balance" type="number" placeholder="100000" th:field="*{balance}">
-                            </div>
-                            <div>
-                                <label class="block text-sm/6 font-semibold text-gray-900"
-                                       for="file_input">Upload file</label>
-                                <input class="w-full bg-gray-200 text-black border border-gray-200 rounded py-3 px-4 mb-3"
-                                       aria-describedby="file_input_help" id="file_input" name="image"
-                                       accept="application/pdf,image/*" type="file">
-                                <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">MAX.
-                                    1M</p>
-                            </div>
-                        </div>
-                        <div class="-mx-3 md:flex mt-2">
-                            <div class="md:w-full px-3">
-                                <button type="submit"
-                                        class="md:w-full bg-gray-900 text-white font-bold py-2 px-4 border-b-4 hover:border-b-2 border-gray-500 hover:border-gray-100 rounded-full">
-                                    Save
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </form>
+        <div class="w-full" id="default-tab-content">
+            <div class="hidden px-4" id="bank-info" role="tabpanel"
+                 aria-labelledby="bank-info-tab">
+                <div>
+                    <th:block th:replace="~{components/upload/bank-info :: bank-info}"/>
+                    <script>
+                        $(document).ready(function() {
+                            $('#bank-info-table').DataTable( {
+                                "searching": false,
+                                "paging": false,
+                                "info": false,
+                                "lengthChange":false
+                            } );
+                        } );
+                    </script>
+                </div>
             </div>
             <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="incomeStatement" role="tabpanel"
                  aria-labelledby="dashboard-tab">
