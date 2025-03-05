@@ -23,7 +23,7 @@ public class HistoryController {
     @GetMapping
     public String showHistoryPage(Model model) {
         List<BankInformation> bankInformationList = bankInformationService.getAllBankInformation();
-        model.addAttribute("bankInformationList", bankInformationList);
+        model.addAttribute("bankInfoList", bankInformationList);
         return "history";
     }
 }
