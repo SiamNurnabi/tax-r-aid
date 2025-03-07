@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/upload")
@@ -44,7 +43,7 @@ public class UploadController {
         model.addAttribute("incomeInformation", new IncomeInformation());
 
         model.addAttribute("bankInfoList", bankInformationService.getAllBankInformation());
-        model.addAttribute("incomeInfoList", incomeInformationService.getAllBankInformation());
+        model.addAttribute("incomeInfoList", incomeInformationService.getAllIncomeInformation());
         return "upload";
     }
 
@@ -53,7 +52,7 @@ public class UploadController {
                                  @RequestParam("image") MultipartFile file) throws IOException {
         if (!file.isEmpty()) {
             AppFile appFile = storageService.uploadImageToFileSystem(file, AppFileType.BANK_STATEMENT);
-            bankInformation.setFileId(appFile);
+            bankInformation.setFile(appFile);
             bankInformationService.save(bankInformation);
         }
         return "redirect:/upload";
@@ -64,7 +63,7 @@ public class UploadController {
                                    @RequestParam("image") MultipartFile file) throws IOException {
         if (!file.isEmpty()) {
             AppFile appFile = storageService.uploadImageToFileSystem(file, AppFileType.INCOME_STATEMENT);
-            incomeInformation.setFileId(appFile);
+            incomeInformation.setFile(appFile);
             incomeInformationService.save(incomeInformation);
         }
         return "redirect:/upload";

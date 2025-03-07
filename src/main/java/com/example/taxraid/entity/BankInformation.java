@@ -40,5 +40,5 @@ public class BankInformation extends BaseEntity {
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "file_id")
-    private AppFile fileId;
+    private AppFile file;
 }

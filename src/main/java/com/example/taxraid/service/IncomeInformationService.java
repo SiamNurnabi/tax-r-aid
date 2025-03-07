@@ -21,7 +21,7 @@ public class IncomeInformationService {
         return incomeInformationRepository.save(incomeInformation);
     }
 
-    public List<IncomeInformation> getAllBankInformation() {
+    public List<IncomeInformation> getAllIncomeInformation() {
         return incomeInformationRepository.findAll();
     }
 }
