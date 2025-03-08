@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+<th:block th:fragment="income-info-table">
+    <table id="income-info-table" class="display" style="width:100%">
+        <thead>
+        <tr>
+            <th>Company Name</th>
+            <th>Designation</th>
+            <th>Salary</th>
+            <th>Duration</th>
+            <th>File</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="border-b-2 border-dashed" th:each="incomeInfo, iterStat : ${incomeInfoList}">
+            <td th:text="${incomeInfo.companyName}"></td>
+            <td th:text="${incomeInfo.designation}"></td>
+            <td th:text="${incomeInfo.salary}"></td>
+            <td th:text="${incomeInfo.duration}"></td>
+            <td th:text="${incomeInfo.file.fileName}"></td>
+            <td><a th:href="${incomeInfo.file.getFileUrl()}"
+                   class="text-blue-600 hover:underline" target="_blank">Open</a></td>
+        </tr>
+        </tbody>
+    </table>
+</th:block>
+</body>
+</html>
