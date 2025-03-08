@@ -16,17 +16,17 @@ public class IncomeInformation extends BaseEntity {
 
     @NotNull
     @Column(name = "designation")
-    private Integer designation;
+    private String designation;
 
     @NotNull
     @Column(name = "salary")
-    private String salary;
+    private Double salary;
 
     @NotNull
     @Column(name = "duration")
-    private Double duration;
+    private String duration;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "file_id")
-    private AppFile fileId;
+    private AppFile file;
 }
