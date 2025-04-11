@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
-@RequestMapping("register")
+@RequestMapping
 public class AuthenticationController {
 
     private final CustomUserDetailsService userDetailsService;
@@ -20,14 +20,14 @@ public class AuthenticationController {
         this.userDetailsService = userDetailsService;
     }
 
-    @GetMapping
+    @GetMapping("/register")
     public String register(Model model) {
         User user = new User();
         model.addAttribute("user", user);
         return "register";
     }
 
-    @PostMapping
+    @PostMapping("/register")
     public String registerUser(@ModelAttribute("user") User user,
                                Model model,
                                RedirectAttributes redirectAttributes) {
@@ -35,6 +35,10 @@ public class AuthenticationController {
         userDetailsService.saveUser(user);
         redirectAttributes.addAttribute("message", "User registered successfully");
         return "redirect:/register";
+    }
 
+    @GetMapping("/login")
+    public String login(Model model) {
+        return "login";
     }
 }
