@@ -12,11 +12,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class AppFile {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
+public class AppFile extends BaseEntity {
 
     @NotNull
     @Column(name = "file_name", nullable = false)

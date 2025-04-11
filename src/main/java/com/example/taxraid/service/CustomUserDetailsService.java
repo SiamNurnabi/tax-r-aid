@@ -35,4 +35,13 @@ public class CustomUserDetailsService implements UserDetailsService {
         user.setPassword(password);
         userRepository.save(user);
     }
+
+    public void updateUser(User user) {
+        userRepository.save(user);
+    }
+
+    public User findByUserName(String username) {
+        return userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException(username));
+    }
 }
