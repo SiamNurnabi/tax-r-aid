@@ -12,7 +12,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class AppFile extends BaseEntity{
+public class AppFile extends BaseEntity {
 
     @NotNull
     @Column(name = "file_name", nullable = false)
