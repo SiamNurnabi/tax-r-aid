@@ -1,6 +1,7 @@
 package com.example.taxraid.service;
 
 import com.example.taxraid.entity.BankInformation;
+import com.example.taxraid.entity.User;
 import com.example.taxraid.repository.BankInformationRepository;
 import org.springframework.stereotype.Service;
 
@@ -21,5 +22,9 @@ public class BankInformationService {
 
     public List<BankInformation> getAllBankInformation() {
         return bankInformationRepository.findAll();
+    }
+
+    public List<BankInformation> getAllBankInformation(User user) {
+        return bankInformationRepository.findAllByCreatedBy(user);
     }
 }

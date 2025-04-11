@@ -1,6 +1,7 @@
 package com.example.taxraid.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedBy;
@@ -20,20 +21,26 @@ public abstract class BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
-//
+
 //    @CreatedBy
 //    @Column(name = "created_by")
 //    private long createdBy;
-//
-//    @CreatedDate
-//    @Column(name = "created_at")
-//    private LocalDateTime createdAt;
-//
-//    @LastModifiedBy
-//    @Column(name = "modified_by")
-//    private long modifiedBy;
-//
-//    @LastModifiedDate
-//    @Column(name = "modified_at")
-//    private LocalDateTime modifiedAt;
+
+    @CreatedBy
+    @ManyToOne
+    @JoinColumn(name = "created_by",updatable = false)
+    private User createdBy;
+
+    @CreatedDate
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
+
+    @LastModifiedBy
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "modified_by")
+    private User modifiedBy;
+
+    @LastModifiedDate
+    @Column(name = "modified_at")
+    private LocalDateTime modifiedAt;
 }

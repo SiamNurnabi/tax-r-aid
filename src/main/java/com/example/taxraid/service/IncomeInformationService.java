@@ -2,6 +2,7 @@ package com.example.taxraid.service;
 
 import com.example.taxraid.entity.BankInformation;
 import com.example.taxraid.entity.IncomeInformation;
+import com.example.taxraid.entity.User;
 import com.example.taxraid.repository.BankInformationRepository;
 import com.example.taxraid.repository.IncomeInformationRepository;
 import org.springframework.stereotype.Service;
@@ -23,5 +24,9 @@ public class IncomeInformationService {
 
     public List<IncomeInformation> getAllIncomeInformation() {
         return incomeInformationRepository.findAll();
+    }
+
+    public List<IncomeInformation> getAllIncomeInformation(User user) {
+        return incomeInformationRepository.findAllByCreatedBy(user);
     }
 }

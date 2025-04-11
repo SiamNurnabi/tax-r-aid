@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+<th:block th:fragment="asset-info-table">
+    <table id="asset-info-table" class="display" style="width:100%">
+        <thead>
+        <tr>
+            <th>Asset Type</th>
+            <th>Opening Balance</th>
+            <th>Closing Balance</th>
+            <th>Remarks</th>
+            <th>File</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="border-b-2 border-dashed" th:each="assetInfo, iterStat : ${assetInfoList}">
+            <td th:text="${assetInfo.assetType}"></td>
+            <td th:text="${assetInfo.openingBalance}"></td>
+            <td th:text="${assetInfo.closingBalance}"></td>
+            <td th:text="${assetInfo.remarks}"></td>
+            <td th:text="${assetInfo.file.fileName}"></td>
+            <td><a th:href="${assetInfo.file.getFileUrl()}"
+                   class="text-blue-600 hover:underline" target="_blank">Open</a></td>
+        </tr>
+        </tbody>
+    </table>
+</th:block>
+</body>
+</html>

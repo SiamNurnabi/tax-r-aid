@@ -28,6 +28,6 @@ public class AppFile extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     @NotNull
-    @Column(name = "file_type", nullable = false)
+    @Column(name = "file_type", nullable = false, columnDefinition = "varchar(255)")
     private AppFileType fileType;
 }
