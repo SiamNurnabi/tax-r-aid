@@ -45,7 +45,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(
                         req ->
                         {
-                            req.requestMatchers("/register/**", "/main.css").permitAll();
+                            req.requestMatchers("/static/**", "/images/**").permitAll();
+                            req.requestMatchers("/register/**").permitAll();
                             req.anyRequest().authenticated();
                         })
                 .formLogin(login -> login

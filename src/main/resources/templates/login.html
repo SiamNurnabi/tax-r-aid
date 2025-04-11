@@ -1,49 +1,50 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" class="h-full bg-white"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/dashboard-layout.html}">
+      layout:decorate="~{layouts/auth-layout.html}">
 
-<body class="h-full">
+<body>
+    <div layout:fragment="content"  class="mt-12 flex flex-col items-center">
+        <h1 class="text-2xl xl:text-3xl font-extrabold">
+            Welcome Back
+        </h1>
+        <h4 class="pt-2">Please log in to continue</h4>
 
-<div layout:fragment="content" class="p-4">
-<!--    <form th:action="@{/login}" th:method="post" data-th-action="@{'/authenticate'}">-->
-    <form th:method="post" data-th-action="@{'/authenticate'}">
-        <section class="bg-gray-50 dark:bg-gray-900">
-            <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-                <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
-                    <div class="sm:mx-auto sm:w-full sm:max-w-sm">
-                        <img class="mx-auto h-10 w-auto"
-                             src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
-                             alt="Your Company">
-                        <h2 class="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900">Sign in to your
-                            account</h2>
-                    </div>
+        <div class="w-full flex-1 mt-8">
+            <div class="mx-auto">
+                <form th:method="post" data-th-action="@{'/authenticate'}">
+                    <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto lg:py-0">
+                        <div class="flex w-full min-h-full flex-col justify-center py-12">
+                            <div>
+                                <label for="userName" class="block text-sm/6 font-medium text-gray-900">Username</label>
+                                <div class="mt-2">
+                                    <input class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                                           type="text" id="userName" name="userName" placeholder="Username">
+                                </div>
+                            </div>
 
-                    <div>
-                        <label for="userName" class="block text-sm/6 font-medium text-gray-900">Username</label>
-                        <div class="mt-2">
-                            <input class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                                   type="text" id="userName" name="userName" placeholder="Username">
+                            <div class="pt-2">
+                                <label for="password" class="block text-sm/6 font-medium text-gray-900">Password</label>
+                                <div class="mt-2">
+                                    <input class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                                           type="password" id="password" name="password" placeholder="Password">
+                                </div>
+                            </div>
+
+                            <div class="pt-4">
+                                <input class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                                       type="submit" value="Log In">
+                            </div>
+
+                            <div class="pt-4 flex w-full justify-center">
+                                <span>Don't have any account?</span>
+                                <a th:href="@{/register}" class="ps-2 text-indigo-600">Sign Up</a>
+                            </div>
                         </div>
-
                     </div>
-
-                    <div>
-                        <label for="password" class="block text-sm/6 font-medium text-gray-900">Password</label>
-                        <div class="mt-2">
-                            <input class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                                   type="password" id="password" name="password" placeholder="Password">
-                        </div>
-
-                    </div>
-                    <div>
-                        <input class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                               type="submit" value="Log In">
-                    </div>
-                </div>
+                </form>
             </div>
-        </section>
-    </form>
-</div>
+        </div>
+    </div>
 </body>
 </html>

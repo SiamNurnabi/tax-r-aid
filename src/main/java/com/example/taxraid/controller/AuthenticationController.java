@@ -34,7 +34,7 @@ public class AuthenticationController {
         // save the user in db
         userDetailsService.saveUser(user);
         redirectAttributes.addAttribute("message", "User registered successfully");
-        return "redirect:/register";
+        return "redirect:/login";
     }
 
     @GetMapping("/login")
