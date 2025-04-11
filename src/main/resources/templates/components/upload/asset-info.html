@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+<th:block th:fragment="asset-info">
+    <form th:action="@{/upload/add-asset-info}" th:method="post" enctype="multipart/form-data"
+          th:object="${assetInformation}">
+        <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col">
+            <div class="-mx-3 md:flex mb-6">
+                <div class="md:w-1/3 px-3">
+                    <label class="uppercase tracking-wide text-black text-xs font-bold mb-2"
+                           for="assetType">
+                        Asset Type
+                    </label>
+                    <select th:field="*{assetType}" id="assetType"
+                            class="w-full bg-gray-200 text-black border border-gray-200 rounded py-3 px-4 mb-3">
+                        <option th:each="type : ${T(com.example.taxraid.enums.AssetType).values()}" class="bg-white"
+                                th:value="${type}"
+                                th:text="${type.value}">
+                        </option>
+                    </select>
+                </div>
+                <div class="md:w-1/2 px-3">
+                    <label class="uppercase tracking-wide text-black text-xs font-bold mb-2" for="openingBalance">
+                        Opening Balance
+                    </label>
+                    <input class="w-full bg-gray-200 text-black border border-gray-200 rounded py-3 px-4 mb-3"
+                           id="openingBalance" type="number" placeholder="123456789" th:field="*{openingBalance}" required>
+                </div>
+            </div>
+            <div class="-mx-3 md:flex mb-6">
+                <div class="md:w-1/3 px-3">
+                    <label class="uppercase tracking-wide text-black text-xs font-bold mb-2" for="closingBalance">
+                        Closing Balance
+                    </label>
+                    <input class="w-full bg-gray-200 text-black border border-gray-200 rounded py-3 px-4 mb-3"
+                           id="closingBalance" type="number" placeholder="99999" th:field="*{closingBalance}">
+                </div>
+                <div class="md:w-1/3 px-3">
+                    <label class="uppercase tracking-wide text-black text-xs font-bold mb-2"
+                           for="remarks">
+                        Remarks
+                    </label>
+                    <input class="w-full bg-gray-200 text-black border border-gray-200 rounded py-3 px-4 mb-3"
+                           id="remarks" type="text" placeholder="Write"
+                           th:field="*{remarks}" required>
+                </div>
+            </div>
+            <div class="-mx-3 md:flex mb-6">
+                <div class="md:w-1/3 px-3">
+                    <label class="block text-sm/6 font-semibold text-gray-900"
+                           for="file_input">Upload file</label>
+                    <input class="w-full bg-gray-200 text-black border border-gray-200 rounded py-3 px-4 mb-3"
+                           aria-describedby="file_input_help" id="file_input" name="image"
+                           accept="application/pdf,image/*" type="file">
+                    <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">MAX.
+                        1M</p>
+                </div>
+            </div>
+            <div class="-mx-3 md:flex mt-2 justify-end">
+                <div class="md:w-1/6 px-3">
+                    <button type="submit"
+                            class="md:w-full bg-gray-900 text-white font-bold py-2 px-4 border-b-4 hover:border-b-2 border-gray-500 hover:border-gray-100 rounded-full">
+                        Save
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </form>
+    <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <th:block th:replace="~{components/upload/asset-info-table :: asset-info-table}"/>
+    </div>
+</th:block>
+</body>
+</html>
