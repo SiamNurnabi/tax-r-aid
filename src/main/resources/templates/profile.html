@@ -5,23 +5,12 @@
 
 <body>
 <div layout:fragment="content" class="py-6 mx-auto w-2/3">
-    <form th:action="@{profile/add-profile-details}" th:method="post" class="bg-white rounded-lg p-5">
+    <form th:action="@{profile/add-profile-details}" th:method="post">
 
-        <div class="border-b border-gray-900/10 pb-12">
-            <h2 class="text-base/7 font-semibold text-gray-900">Profile</h2>
+        <div class="bg-white rounded-lg p-5 border-b border-gray-900/10 pb-12">
+            <h2 class="text-base/7 font-semibold text-gray-900">Basic Informations</h2>
 
             <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-                <div class="sm:col-span-3">
-                    <label for="user-name" class="block text-sm/6 font-medium text-gray-900">First Name</label>
-                    <div class="mt-2">
-                        <input type="text" id="user-name" autocomplete="user-name" readonly
-                               th:field="${user.username}"
-                               class="block w-full rounded-md bg-gray-100 px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
-                    </div>
-                </div>
-
-                <div class="sm:col-span-3"></div>
-
                 <div class="sm:col-span-3">
                     <label for="first-name" class="block text-sm/6 font-medium text-gray-900">First Name</label>
                     <div class="mt-2">
@@ -30,6 +19,7 @@
                                class="block w-full rounded-md bg-gray-100 px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
                     </div>
                 </div>
+
                 <div class="sm:col-span-3">
                     <label for="last-name" class="block text-sm/6 font-medium text-gray-900">Last Name</label>
                     <div class="mt-2">
@@ -57,19 +47,21 @@
                     </div>
                 </div>
 
-                <div class="col-span-full">
-                    <label for="address" class="block text-sm/6 font-medium text-gray-900">Address</label>
+                <div class="sm:col-span-3">
+                    <label for="dob" class="block text-sm/6 font-medium text-gray-900">Birth Date</label>
                     <div class="mt-2">
-                        <input type="text" id="address" autocomplete="address"
-                               th:field="${profileDetails.address}"
+                        <input id="dob" type="date" autocomplete="dob"
+                               th:field="${profileDetails.birthDate}"
                                class="block w-full rounded-md bg-gray-100 px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
                     </div>
                 </div>
 
+                <div class="sm:col-span-3"></div>
+
                 <div class="sm:col-span-3">
-                    <label for="nid" class="block text-sm/6 font-medium text-gray-900">NID Number</label>
+                    <label for="nid" class="block text-sm/6 font-medium text-gray-900">National ID No</label>
                     <div class="mt-2">
-                        <input id="nid" type="number" autocomplete="given-name"
+                        <input id="nid" type="number" autocomplete="nid"
                                th:field="${profileDetails.nid}"
                                class="block w-full rounded-md bg-gray-100 px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
                     </div>
@@ -84,15 +76,139 @@
                     </div>
                 </div>
 
+                <div class="col-span-full">
+                    <label for="address" class="block text-sm/6 font-medium text-gray-900">Address</label>
+                    <div class="mt-2">
+                        <input type="text" id="address" autocomplete="address"
+                               th:field="${profileDetails.address}"
+                               class="block w-full rounded-md bg-gray-100 px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
+                    </div>
+                </div>
             </div>
         </div>
 
-        <div class="mt-6 flex items-center justify-end gap-x-6">
-            <button type="button" class="text-sm/6 font-semibold text-gray-900">Cancel</button>
-            <button type="submit"
-                    class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                Save
-            </button>
+        <div class="bg-white rounded-lg p-5 border-b border-gray-900/10 pb-12 mt-5">
+            <h2 class="text-base/7 font-semibold text-gray-900">Other Tax Informations</h2>
+
+            <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+                <div class="sm:col-span-3">
+                    <label for="circle" class="block text-sm/6 font-medium text-gray-900">Circle</label>
+                    <div class="mt-2">
+                        <input id="circle" type="text" autocomplete="circle"
+                               th:field="${profileDetails.circle}"
+                               class="block w-full rounded-md bg-gray-100 px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
+                    </div>
+                </div>
+
+                <div class="sm:col-span-3">
+                    <label for="tax-zone" class="block text-sm/6 font-medium text-gray-900">Taxes Zone</label>
+                    <div class="mt-2">
+                        <input id="tax-zone" type="text" autocomplete="tax-zone"
+                               th:field="${profileDetails.taxesZone}"
+                               class="block w-full rounded-md bg-gray-100 px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
+                    </div>
+                </div>
+
+                <div class="sm:col-span-3">
+                    <label class="font-bold mb-0 lg:mb-1 required">Residential Status</label>
+                    <div class="flex pt-2">
+                        <div class="mr-2 gender-input" th:each="residential : ${residentialStatusList}">
+                            <label class="inline-flex items-center">
+                                <input type="radio" class="form-radio text-blue-600"
+                                       th:field="${profileDetails.residentialStatus}"
+                                       th:value="${residential}" required/>
+                                <span class="ml-2" th:text="${residential.getValue()}"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sm:col-span-3">
+                    <label class="font-bold mb-0 lg:mb-1 required">Taxpayer's Status</label>
+                    <div class="flex pt-2">
+                        <div class="mr-2 gender-input" th:each="taxpayer : ${taxPayerStatusList}">
+                            <label class="inline-flex items-center">
+                                <input type="radio" class="form-radio text-blue-600"
+                                       th:field="${profileDetails.taxPayerStatus}"
+                                       th:value="${taxpayer}" required/>
+                                <span class="ml-2" th:text="${taxpayer.getValue()}"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sm:col-span-6">
+                    <label class="font-bold mb-0 lg:mb-1 required">Special Benefit</label>
+                    <div class="flex pt-2">
+                        <div class="mr-2 gender-input" th:each="specialBenefit : ${specialBenefitTypeList}">
+                            <label class="inline-flex items-center">
+                                <input type="radio" class="form-radio text-blue-600"
+                                       th:field="${profileDetails.specialBenefitType}"
+                                       th:value="${specialBenefit}" required/>
+                                <span class="ml-2" th:text="${specialBenefit.getValue()}"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sm:col-span-3">
+                    <label for="spouse-name" class="block text-sm/6 font-medium text-gray-900">Wife/Husband's
+                        Name</label>
+                    <div class="mt-2">
+                        <input id="spouse-name" type="text" autocomplete="spouse-name"
+                               th:field="${profileDetails.spouseName}"
+                               class="block w-full rounded-md bg-gray-100 px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
+                    </div>
+                </div>
+
+                <div class="sm:col-span-3">
+                    <label for="spouse-tin" class="block text-sm/6 font-medium text-gray-900">Tin (if spouse is a
+                        Taxpayer)</label>
+                    <div class="mt-2">
+                        <input id="spouse-tin" type="text" autocomplete="spouse-tin"
+                               th:field="${profileDetails.spouseTin}"
+                               class="block w-full rounded-md bg-gray-100 px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
+                    </div>
+                </div>
+
+                <div class="sm:col-span-3">
+                    <label for="employee-name" class="block text-sm/6 font-medium text-gray-900">If employed, employer’s
+                        name</label>
+                    <div class="mt-2">
+                        <input id="employee-name" type="text" autocomplete="employee-name"
+                               th:field="${profileDetails.employerName}"
+                               class="block w-full rounded-md bg-gray-100 px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
+                    </div>
+                </div>
+
+                <div class="sm:col-span-3">
+                    <label for="org-name" class="block text-sm/6 font-medium text-gray-900">Name of Organization</label>
+                    <div class="mt-2">
+                        <input id="org-name" type="text" autocomplete="org-name"
+                               th:field="${profileDetails.orgName}"
+                               class="block w-full rounded-md bg-gray-100 px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
+                    </div>
+                </div>
+
+                <div class="sm:col-span-3">
+                    <label for="org-bin" class="block text-sm/6 font-medium text-gray-900">Business Identification
+                        number (BIN)</label>
+                    <div class="mt-2">
+                        <input id="org-bin" type="text" autocomplete="org-bin"
+                               th:field="${profileDetails.orgBin}"
+                               class="block w-full rounded-md bg-gray-100 px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="mt-6 flex items-center justify-end gap-x-6">
+                <button type="button" class="text-sm/6 font-semibold text-gray-900">Cancel</button>
+                <button type="submit"
+                        class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                    Save
+                </button>
+            </div>
         </div>
     </form>
 </div>

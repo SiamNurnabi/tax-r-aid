@@ -2,9 +2,13 @@ package com.example.taxraid.controller;
 
 import com.example.taxraid.entity.ProfileDetails;
 import com.example.taxraid.entity.User;
+import com.example.taxraid.enums.ResidentialStatus;
+import com.example.taxraid.enums.SpecialBenefitType;
+import com.example.taxraid.enums.TaxPayerStatus;
 import com.example.taxraid.service.CustomUserDetailsService;
 import com.example.taxraid.service.ProfileDetailsService;
 import jakarta.validation.Valid;
+import org.springframework.beans.BeanUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +17,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.Arrays;
 import java.util.Objects;
 
 @Controller
@@ -41,6 +46,9 @@ public class ProfileController {
 
         model.addAttribute("user", user);
         model.addAttribute("profileDetails", profileDetails);
+        model.addAttribute("residentialStatusList", Arrays.asList(ResidentialStatus.values()));
+        model.addAttribute("taxPayerStatusList", Arrays.asList(TaxPayerStatus.values()));
+        model.addAttribute("specialBenefitTypeList", Arrays.asList(SpecialBenefitType.values()));
 
         return "profile";
     }
@@ -49,11 +57,18 @@ public class ProfileController {
     @PostMapping("/add-profile-details")
     public String saveProfileDetails(@Valid @ModelAttribute("profileDetails") ProfileDetails profileDetails,
                                      @ModelAttribute("user") User user) {
-        profileDetailsService.save(profileDetails);
+        User currentUser = userDetailsService.findByUserName(user.getUsername());
 
-        User previuosUser = userDetailsService.findByUserName(user.getUsername());
-        previuosUser.setProfileDetails(profileDetails);
-        userDetailsService.updateUser(previuosUser);
+        if (currentUser.getProfileDetails() != null) {
+            ProfileDetails existingProfile = currentUser.getProfileDetails();
+            BeanUtils.copyProperties(profileDetails, existingProfile, "id");
+
+            profileDetailsService.save(existingProfile);
+        } else {
+            profileDetailsService.save(profileDetails);
+            currentUser.setProfileDetails(profileDetails);
+            userDetailsService.updateUser(currentUser);
+        }
 
         return "redirect:/profile";
     }
