@@ -28,17 +28,19 @@ public class UploadController {
     private final BankInformationService bankInformationService;
     private final IncomeInformationService incomeInformationService;
     private final AssetInformationService assetInformationService;
+    private final InvestmentInformationService investmentInformationService;
 
     public UploadController(BankInformationService bankInformationService,
                             IncomeInformationService incomeInformationService,
                             StorageService storageService,
                             UserService userService,
-                            AssetInformationService assetInformationService) {
+                            AssetInformationService assetInformationService, InvestmentInformationService investmentInformationService) {
         this.bankInformationService = bankInformationService;
         this.incomeInformationService = incomeInformationService;
         this.storageService = storageService;
         this.userService = userService;
         this.assetInformationService = assetInformationService;
+        this.investmentInformationService = investmentInformationService;
     }
 
     @GetMapping
@@ -47,11 +49,13 @@ public class UploadController {
         model.addAttribute("bankInformation", new BankInformation());
         model.addAttribute("incomeInformation", new IncomeInformation());
         model.addAttribute("assetInformation", new AssetInformation());
+        model.addAttribute("investmentInformation", new InvestmentInformation());
         model.addAttribute("menuItems", AssetType.values());
 
         model.addAttribute("bankInfoList", bankInformationService.getAllBankInformation(user));
         model.addAttribute("incomeInfoList", incomeInformationService.getAllIncomeInformation(user));
         model.addAttribute("assetInfoList", assetInformationService.getAllAssetInformation(user));
+        model.addAttribute("investmentInfoList", investmentInformationService.getAllInvestmentInformation(user));
         return "upload";
     }
 
@@ -84,6 +88,17 @@ public class UploadController {
             AppFile appFile = storageService.uploadImageToFileSystem(file, AppFileType.ASSET);
             assetInformation.setFile(appFile);
             assetInformationService.save(assetInformation);
+        }
+        return "redirect:/upload";
+    }
+
+    @PostMapping("/add-investment-info")
+    public String submitInvestmentInfo(@ModelAttribute("investmentInformation") InvestmentInformation investmentInformation,
+                                       @RequestParam("image") MultipartFile file) throws IOException {
+        if (!file.isEmpty()) {
+            AppFile appFile = storageService.uploadImageToFileSystem(file, AppFileType.ASSET);
+            investmentInformation.setFile(appFile);
+            investmentInformationService.save(investmentInformation);
         }
         return "redirect:/upload";
     }

@@ -13,7 +13,7 @@ public class AssetInformation extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     @NotNull
-    @Column(name = "asset_type", nullable = false)
+    @Column(name = "asset_type", nullable = false, columnDefinition = "varchar(255)")
     private AssetType assetType;
 
     @NotNull

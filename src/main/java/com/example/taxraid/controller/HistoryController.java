@@ -17,15 +17,17 @@ public class HistoryController {
     private final BankInformationService bankInformationService;
     private final IncomeInformationService incomeInformationService;
     private final AssetInformationService assetInformationService;
+    private final InvestmentInformationService investmentInformationService;
 
     public HistoryController(BankInformationService bankInformationService,
                              IncomeInformationService incomeInformationService,
                              UserService userService,
-                             AssetInformationService assetInformationService) {
+                             AssetInformationService assetInformationService, InvestmentInformationService investmentInformationService) {
         this.bankInformationService = bankInformationService;
         this.incomeInformationService = incomeInformationService;
         this.userService = userService;
         this.assetInformationService = assetInformationService;
+        this.investmentInformationService = investmentInformationService;
     }
 
     @GetMapping
@@ -34,6 +36,7 @@ public class HistoryController {
         model.addAttribute("bankInfoList", bankInformationService.getAllBankInformation(user));
         model.addAttribute("incomeInfoList", incomeInformationService.getAllIncomeInformation(user));
         model.addAttribute("assetInfoList", assetInformationService.getAllAssetInformation(user));
+        model.addAttribute("investmentInfoList", investmentInformationService.getAllInvestmentInformation(user));
         return "history";
     }
 }

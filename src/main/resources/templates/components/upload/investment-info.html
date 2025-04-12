@@ -1,51 +1,71 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <body>
-<th:block th:fragment="asset-info">
-    <form th:action="@{/upload/add-asset-info}" th:method="post" enctype="multipart/form-data"
-          th:object="${assetInformation}">
+<th:block th:fragment="investment-info">
+    <form th:action="@{/upload/add-investment-info}" th:method="post" enctype="multipart/form-data"
+          th:object="${investmentInformation}">
         <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col">
             <div class="-mx-3 md:flex mb-6">
-                <div class="md:w-1/3 px-3">
+                <div class="md:w-1/2 px-3">
                     <label class="uppercase tracking-wide text-black text-xs font-bold mb-2"
-                           for="assetType">
-                        Asset Type
+                           for="investmentType">
+                        Investment Type
                     </label>
-                    <select th:field="*{assetType}" id="assetType"
+                    <select th:field="*{investmentType}" id="investmentType"
                             class="w-full bg-gray-200 text-black border border-gray-200 rounded py-3 px-4 mb-3">
-                        <option th:each="type : ${T(com.example.taxraid.enums.AssetType).values()}" class="bg-white"
+                        <option th:each="type : ${T(com.example.taxraid.enums.InvestmentType).values()}"
+                                class="bg-white"
                                 th:value="${type}"
                                 th:text="${type.value}">
                         </option>
                     </select>
                 </div>
-                <div class="md:w-1/3 px-3">
-                    <label class="uppercase tracking-wide text-black text-xs font-bold mb-2" for="openingBalance">
-                        Opening Balance
+                <div class="md:w-1/2 px-3">
+                    <label class="uppercase tracking-wide text-black text-xs font-bold mb-2" for="name">
+                        Name
                     </label>
                     <input class="w-full bg-gray-200 text-black border border-gray-200 rounded py-3 px-4 mb-3"
-                           id="openingBalance" type="number" placeholder="123456789" th:field="*{openingBalance}" required>
+                           id="name" type="text" placeholder="Write" th:field="*{name}"
+                           required>
                 </div>
             </div>
             <div class="-mx-3 md:flex mb-6">
                 <div class="md:w-1/3 px-3">
-                    <label class="uppercase tracking-wide text-black text-xs font-bold mb-2" for="closingBalance">
-                        Closing Balance
+                    <label class="uppercase tracking-wide text-black text-xs font-bold mb-2" for="accountNumber">
+                        Account Number
                     </label>
                     <input class="w-full bg-gray-200 text-black border border-gray-200 rounded py-3 px-4 mb-3"
-                           id="closingBalance" type="number" placeholder="99999" th:field="*{closingBalance}">
+                           id="accountNumber" type="text" placeholder="Write" th:field="*{accountNumber}">
                 </div>
                 <div class="md:w-1/3 px-3">
                     <label class="uppercase tracking-wide text-black text-xs font-bold mb-2"
-                           for="remarks">
-                        Remarks
+                           for="openingBalance">
+                        Opening Balance
                     </label>
                     <input class="w-full bg-gray-200 text-black border border-gray-200 rounded py-3 px-4 mb-3"
-                           id="remarks" type="text" placeholder="Write"
-                           th:field="*{remarks}" required>
+                           id="openingBalance" type="number" placeholder="99999"
+                           th:field="*{openingBalance}" required>
+                </div>
+                <div class="md:w-1/3 px-3">
+                    <label class="uppercase tracking-wide text-black text-xs font-bold mb-2"
+                           for="balance">
+                        Balance
+                    </label>
+                    <input class="w-full bg-gray-200 text-black border border-gray-200 rounded py-3 px-4 mb-3"
+                           id="balance" type="number" placeholder="99999"
+                           th:field="*{balance}" required>
                 </div>
             </div>
             <div class="-mx-3 md:flex mb-6">
+                <div class="md:w-1/3 px-3">
+                    <label class="uppercase tracking-wide text-black text-xs font-bold mb-2"
+                           for="tds">
+                        TDS
+                    </label>
+                    <input class="w-full bg-gray-200 text-black border border-gray-200 rounded py-3 px-4 mb-3"
+                           id="tds" type="number" placeholder="99999"
+                           th:field="*{tds}" required>
+                </div>
                 <div class="md:w-1/3 px-3">
                     <label class="block text-sm/6 font-semibold text-gray-900"
                            for="file_input">Upload file</label>
@@ -68,7 +88,7 @@
         </div>
     </form>
     <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-        <th:block th:replace="~{components/upload/asset-info-table :: asset-info-table}"/>
+        <th:block th:replace="~{components/upload/investment-info-table :: investment-info-table}"/>
     </div>
 </th:block>
 </body>
