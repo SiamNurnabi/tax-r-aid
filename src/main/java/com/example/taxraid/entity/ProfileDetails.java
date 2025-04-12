@@ -4,10 +4,7 @@ import com.example.taxraid.enums.ResidentialStatus;
 import com.example.taxraid.enums.SpecialBenefitType;
 import com.example.taxraid.enums.TaxPayerStatus;
 import com.example.taxraid.util.PatternConstants;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
@@ -78,4 +75,8 @@ public class ProfileDetails extends BaseEntity {
 
     @Column(name = "org_bin")
     private String orgBin;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 }
