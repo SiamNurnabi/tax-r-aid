@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/dashboard-layout.html}">
+<body>
+<div layout:fragment="content" class="py-6 mx-auto w-full px-4">
+    <div class="flex flex-col lg:flex-row gap-6">
+        <!-- Left Column (Calculator) -->
+        <div class="lg:w-[65%]">
+            <div class="bg-white rounded-xl shadow-md p-6 h-full">
+                <h2 class="text-2xl font-bold text-blue-700 mb-6 text-center">Tax Calculator</h2>
+
+                <!-- Calculator Form -->
+                <form id="taxForm" th:action="@{/calculator/calculate-tax}" method="post" class="space-y-4">
+                    <div>
+                        <label class="block font-medium">Annual Income (৳):</label>
+                        <input type="number" name="annualIncome" step="1000" min="0" required
+                               th:value="${annualIncome}"
+                               class="w-full px-4 py-2 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400">
+                    </div>
+
+                    <div>
+                        <label class="block font-medium">Taxpayer Type:</label>
+                        <select name="taxpayerType" required
+                                class="w-full px-4 py-2 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400">
+                            <option value="">-- Select --</option>
+                            <option th:each="type : ${taxpayerTypes}" th:value="${type}" th:text="${type}"
+                                    th:selected="${type == taxpayerType}"></option>
+                        </select>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block font-medium">Gender:</label>
+                            <select name="gender"
+                                    class="w-full px-4 py-2 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400">
+                                <option value="">-- Select --</option>
+                                <option value="Male" th:selected="${gender == 'Male'}">Male</option>
+                                <option value="Female" th:selected="${gender == 'Female'}">Female</option>
+                                <option value="Other" th:selected="${gender == 'Other'}">Other</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block font-medium">Age:</label>
+                            <input type="number" name="age" min="0" th:value="${age}"
+                                   class="w-full px-4 py-2 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block font-medium">Resident Status:</label>
+                            <select name="residentStatus"
+                                    class="w-full px-4 py-2 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400">
+                                <option value="">-- Select --</option>
+                                <option value="Resident" th:selected="${residentStatus == 'Resident'}">Resident</option>
+                                <option value="Non-Resident" th:selected="${residentStatus == 'Non-Resident'}">
+                                    Non-Resident
+                                </option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block font-medium">Assessment Year:</label>
+                            <input type="text" name="assessmentYear" placeholder="e.g. 2024-2025"
+                                   th:value="${assessmentYear}"
+                                   class="w-full px-4 py-2 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400">
+                        </div>
+                    </div>
+
+                    <div class="flex items-center space-x-2">
+                        <input type="checkbox" name="hasInvestment" id="hasInvestment" th:checked="${hasInvestment}"
+                               class="accent-blue-600 h-4 w-4">
+                        <label for="hasInvestment" class="text-sm font-medium">Has Tax Rebate Eligible
+                            Investment</label>
+                    </div>
+
+                    <div class="text-center">
+                        <button type="submit"
+                                class="mt-4 px-6 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 shadow-md transition">
+                            Calculate Tax
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Result Column -->
+                <div id="resultSection"
+                     th:fragment="resultSection"
+                     class="p-4 mt-2 bg-blue-50 rounded-xl border border-blue-200 h-fit self-start"
+                     th:if="${taxAmount != null}">
+
+                    <h3 class="text-lg font-semibold text-blue-700 mb-3">Tax Result</h3>
+                    <div class="space-y-2 text-sm">
+                        <p><strong>Annual Income:</strong> ৳<span th:text="${annualIncome}"></span></p>
+                        <p><strong>Taxpayer Type:</strong> <span th:text="${taxpayerType}"></span></p>
+                        <p><strong>Gender:</strong> <span th:text="${gender}"></span></p>
+                        <p><strong>Age:</strong> <span th:text="${age}"></span></p>
+                        <p><strong>Resident Status:</strong> <span th:text="${residentStatus}"></span></p>
+                        <p><strong>Assessment Year:</strong> <span th:text="${assessmentYear}"></span></p>
+                        <p><strong>Calculated Tax:</strong> ৳<span th:text="${taxAmount}"></span></p>
+                        <p th:if="${hasInvestment}"><strong>Rebate (max 15,000):</strong> ৳<span
+                                th:text="${rebateAmount}"></span></p>
+                        <p><strong>Net Tax:</strong> ৳<span th:text="${netTax}"></span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="lg:w-[35%] flex flex-col gap-4">
+            <!-- Tax Slabs Card -->
+            <div class="bg-white rounded-xl shadow-md p-6 overflow-y-auto">
+                <h3 class="text-xl font-bold text-blue-700 mb-4">Tax Slabs</h3>
+                <div class="space-y-4">
+                    <div th:each="slabEntry : ${taxSlabs}">
+                        <h4 class="font-semibold text-lg mb-2" th:text="${slabEntry.key}"></h4>
+                        <table class="w-full border-collapse">
+                            <thead class="bg-gray-100">
+                            <tr>
+                                <th class="p-2 text-left border border-gray-200">Income Range</th>
+                                <th class="p-2 text-right border border-gray-200">Rate</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="slab : ${slabEntry.value}"
+                                class="border-b border-gray-200 hover:bg-gray-50">
+                                <td class="p-2 border border-gray-200">
+                                    <span th:if="${slab.min == 0}">Up to </span>
+                                    <span th:if="${slab.min > 0}">
+            <span th:text="${#numbers.formatDecimal(slab.min,1,'COMMA',0,'POINT')}"></span> -
+        </span>
+                                    <span th:if="${slab.isNotMaxValue()}"
+                                          th:text="${#numbers.formatDecimal(slab.max,1,'COMMA',0,'POINT')}"></span>
+                                    <span th:if="${slab.isMaxValue()}">
+            Above <span th:text="${#numbers.formatDecimal(slab.min,1,'COMMA',0,'POINT')}"></span>
+        </span>
+                                </td>
+                                <td class="p-2 text-right border border-gray-200"
+                                    th:text="${slab.rate == 0} ? '0%' : ${#numbers.formatPercent(slab.rate,1,1)}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Rebate Rules Card -->
+            <div class="bg-white rounded-xl shadow-md p-6 overflow-y-auto">
+                <h3 class="text-xl font-bold text-blue-700 mb-4">Rebate Rules</h3>
+                <div class="space-y-3">
+                    <div th:each="rule : ${rebateRules}">
+                        <h4 class="font-medium text-blue-600" th:text="${rule.title}"></h4>
+                        <p class="text-gray-700" th:text="${rule.description}"></p>
+                    </div>
+                    <div class="pt-4 border-t border-gray-200">
+                        <h4 class="font-medium text-blue-600">Notes:</h4>
+                        <ul class="list-disc pl-5 space-y-1 text-gray-700">
+                            <li>Minimum tax ৳5,000 for income above threshold</li>
+                            <li>Female/Senior citizens get higher limits</li>
+                            <li>Investment rebate capped at ৳15,000</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        $(document).ready(function () {
+            $('#taxForm').on('change input', 'input, select', function () {
+                if ($('#annualIncome').val() && $('#taxpayerType').val()) {
+                    // Show loading state
+                    $('#resultSection').html('<div class="text-center py-4">Calculating...</div>');
+
+                    $.ajax({
+                        type: 'POST',
+                        url: $('#taxForm').attr('action'),
+                        data: $('#taxForm').serialize(),
+                        headers: {
+                            "X-Requested-With": "XMLHttpRequest"
+                        },
+                        success: function (response) {
+                            // Check if we got HTML content
+                            if (response.trim().startsWith('<')) {
+                                $('#resultSection').replaceWith($(response));
+                            } else {
+                                console.error('Unexpected response:', response);
+                            }
+                        },
+                        error: function (xhr) {
+                            console.error("Error:", xhr.responseText);
+                            $('#resultSection').html('<div class="text-red-500">Error in calculation</div>');
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+</div>
+</body>
+</html>
